@@ -240,7 +240,7 @@ func TestSplitCh_UnevenConsumerSpeeds(t *testing.T) {
 	}
 }
 
-func ExampleSplitChOrderProcessing() {
+func ExamplesplitCh_orderProcessing() {
 	type processedOrder struct {
 		workerID int
 		orderID  int
