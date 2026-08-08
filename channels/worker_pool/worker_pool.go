@@ -42,10 +42,3 @@ func send[T any](inputCh <-chan T, n int) <-chan T {
 
 	return outputCh
 }
-
-type Transaction struct {
-	ID     int
-	From   string
-	To     string
-	Amount float64
-}
