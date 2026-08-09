@@ -10,13 +10,13 @@ func mergeChs[T any](channels ...<-chan T) <-chan T {
 
 	outputCh := make(chan T)
 	for _, ch := range channels {
-		go func() {
+		go func(ch <-chan T) {
 			defer wg.Done()
 
 			for val := range ch {
 				outputCh <- val
 			}
-		}()
+		}(ch)
 	}
 
 	go func() {
