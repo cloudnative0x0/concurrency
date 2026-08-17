@@ -96,11 +96,6 @@ Round-robin в `splitCh` не смотрит на то, кто из воркер
 
 Fan-out часто идёт в паре с fan-in: разбили работу на воркеров, каждый пишет в свой канал, а потом свели всё обратно в один поток, если нужен единый результат, а не просто побочный эффект вроде рассылки в сеть, как в примере выше.
 
-### Сборка и тестирование
-
-```bash
-go test -race -v ./...
-```
 
 Флаг `-race` важен здесь так же, как и в fan-in: несколько воркеров работают параллельно, и любая ошибка синхронизации при распределении по каналам проявится именно под race detector'ом.
 
@@ -195,11 +190,5 @@ Round-robin in `splitCh` doesn't care which worker is free and which is still bu
 For a small number of elements or cheap processing, the pattern isn't worth it — the overhead of goroutines and synchronization outweighs the benefit of parallelism, and a plain loop with no workers at all runs faster.
 
 Fan-out often pairs with fan-in: work gets split across workers, each writes to its own channel, then everything gets merged back into a single stream if a unified result is needed rather than just a side effect like broadcasting to the network, as in the example above.
-
-### Build and test
-
-```bash
-go test -race -v ./...
-```
 
 The `-race` flag matters here just as much as with fan-in: several workers run in parallel, and any synchronization bug in how work gets distributed across channels will show up under the race detector.

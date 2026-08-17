@@ -80,12 +80,6 @@ Worker pool подходит, когда задач много, они одно�
 
 Для небольшого числа задач или дешёвой обработки на одну задачу пул воркеров не нужен — стоимость запуска горутин и синхронизации через канал и `WaitGroup` перевесит выигрыш от параллелизма, и обычный последовательный цикл отработает быстрее.
 
-### Сборка и тестирование
-
-```bash
-go test -race -v ./...
-```
-
 Флаг `-race` здесь обязателен: несколько воркеров пишут в общий `outputCh` конкурентно, и любая ошибка синхронизации проявится именно под race detector'ом.
 
 ---
@@ -163,11 +157,5 @@ Worker pool fits when there are many similar tasks with uneven processing time �
 The same design brings its own limits. A shared channel is a single synchronization point: if writing to `inputCh` or reading from `outputCh` is slow, all `n` workers end up bottlenecked on that same channel, and adding more workers stops giving a linear performance gain. Processing order isn't preserved, and if order matters, a separate sorting or numbering step has to be added on top of the pool. The value of `n` also has to be tuned by hand — too many workers for cheap processing adds goroutine-switching overhead without real benefit, too few leaves available parallelism on the table.
 
 For a small number of tasks or cheap per-task processing, a worker pool isn't worth it — the cost of spinning up goroutines and synchronizing through a channel and a `WaitGroup` outweighs the gain from parallelism, and a plain sequential loop runs faster.
-
-### Build and test
-
-```bash
-go test -race -v ./...
-```
 
 The `-race` flag is mandatory here: several workers write to the shared `outputCh` concurrently, and any synchronization bug will show up under the race detector.

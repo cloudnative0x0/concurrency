@@ -74,12 +74,6 @@ func ExampleFanIn() {
 
 Для одного источника паттерн избыточен — это просто лишняя горутина поверх уже существующего канала. И, как уже сказано, вызывающий код обязан закрыть все входные каналы сам, иначе часть горутин внутри `mergeChs` зависнет на чтении навсегда и произойдёт утечка.
 
-### Сборка и тестирование
-
-```bash
-go test -race -v ./...
-```
-
 Флаг `-race` тут не для галочки: несколько горутин пишут в один и тот же `outputCh`, и любая ошибка в синхронизации всплывёт именно под race detector'ом, а не в обычном прогоне.
 
 ---
@@ -151,11 +145,5 @@ Fits when there are several sources doing their own thing independently — work
 The pattern gives no ordering guarantees between sources — whichever goroutine wins the race to write into `outputCh` is what comes out next. If order matters, say you need to know which channel a value came from or preserve some sequence, plain fan-in won't do it — values need to be wrapped with a source tag, or a different approach is needed.
 
 For a single source the pattern is overkill — it's just an extra goroutine wrapped around a channel that already exists. And as already noted, the caller is on the hook for closing every input channel, otherwise some of the goroutines inside `mergeChs` sit on a read forever and leak.
-
-### Build and test
-
-```bash
-go test -race -v ./...
-```
 
 The `-race` flag here isn't decorative: multiple goroutines write into the same `outputCh`, and any synchronization bug shows up under the race detector, not in a plain run.

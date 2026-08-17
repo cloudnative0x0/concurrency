@@ -73,11 +73,6 @@ for v := range result {
 
 Ещё момент: текущие `generate` и `process` не смотрят на `context.Context`. Если никто не вычитывает канал до конца — горутина зависнет навсегда на попытке записи. Добавлять cancellation через `ctx.Done()` придётся отдельно, тут этого нет.
 
-### Сборка и тестирование
-
-```bash
-go test -race -v ./...
-```
 
 Тесты проверяют порядок значений, работу с произвольным типом, склейку нескольких стадий и каскадное закрытие каналов. Плюс `Example`, который сверяет реальный вывод программы со строкой `// Output:`.
 
@@ -149,11 +144,5 @@ If items are independent of each other and stage order doesn't matter — fan-ou
 For small amounts of data, skip pipeline entirely — the overhead of goroutines and channels outweighs the benefit, and a plain loop runs faster without spinning up a single goroutine.
 
 One more thing: `generate` and `process` as they stand don't look at `context.Context`. If nothing reads the channel to the end, the goroutine hangs forever trying to write. Adding cancellation via `ctx.Done()` is a separate piece of work, not covered here.
-
-### Build and test
-
-```bash
-go test -race -v ./...
-```
 
 Tests cover value ordering, working with an arbitrary type, chaining several stages, and cascading channel closure. Plus an `Example` that checks the program's actual output against the `// Output:` line.
