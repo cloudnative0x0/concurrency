@@ -65,7 +65,8 @@ func (s *Semaphore) Close() {
 	s.mu.Unlock()
 }
 
-type noCopy struct{} //nolint:unused
+//nolint:unused
+type noCopy struct{}
 
 func (*noCopy) Lock()   {} //nolint:unused
 func (*noCopy) UnLock() {} //nolint:unused
