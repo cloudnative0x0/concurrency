@@ -9,7 +9,7 @@ import (
 var ErrSemaphoreClosed = errors.New("semaphore: closed")
 
 type Semaphore struct {
-	noCopy noCopy // nolint:unused
+	noCopy noCopy //nolint:unused
 
 	tokens chan struct{}
 	mu     sync.RWMutex
@@ -67,5 +67,5 @@ func (s *Semaphore) Close() {
 
 type noCopy struct{}
 
-func (*noCopy) Lock()   {}
-func (*noCopy) UnLock() {}
+func (*noCopy) Lock()   {} //nolint:unused
+func (*noCopy) UnLock() {} //nolint:unused
