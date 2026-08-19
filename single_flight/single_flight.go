@@ -63,11 +63,14 @@ func (s *SingleFlight) doCall(c *call, key string, action func() (interface{}, e
 		}
 		s.mutex.Unlock()
 
-		c.wg.Done()
-
 		if r := recover(); r != nil {
 			c.panicValue = r
-			panic(r)
+		}
+
+		c.wg.Done()
+
+		if c.panicValue != nil {
+			panic(c.panicValue)
 		}
 	}()
 
