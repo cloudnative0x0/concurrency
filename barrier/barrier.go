@@ -50,6 +50,9 @@ func (b *Barrier) After() {
 	<-b.afterCh
 }
 
+// Example of usage:
+//
+//nolint:unused
 func main() {
 	var wg sync.WaitGroup
 	wg.Add(3)

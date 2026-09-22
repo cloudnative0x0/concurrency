@@ -16,6 +16,8 @@ func Transform[T any](inputCh <-chan T, action func(T) T) <-chan T {
 }
 
 // Example of usage:
+//
+//nolint:unused
 func main() {
 	channel := make(chan int)
 

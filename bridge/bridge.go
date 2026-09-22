@@ -19,6 +19,9 @@ func Bridge[T any](inputChCh chan chan T) <-chan T {
 	return outputCh
 }
 
+// Example of usage:
+//
+//nolint:unused
 func main() {
 	channelChannel := make(chan chan string)
 
